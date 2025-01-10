@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plotly Plots Grid</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .plots-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .plot-wrapper {
+            border: 2px solid #FF00FF;  /* Magenta border */
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .plot-description {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* Make it responsive for smaller screens */
+        @media (max-width: 1200px) {
+            .plots-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .plot-div {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="plots-container">
+        {% for plot_data in plots_data %}
+        <div class="plot-wrapper">
+            <div class="plot-div" id="plot-{{ forloop.counter }}"></div>
+            <div class="plot-description">
+                {{ plot_data.description }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        {% for plot_data in plots_data %}
+        Plotly.newPlot('plot-{{ forloop.counter }}', 
+            {{ plot_data.plot|safe }}.data,
+            {{ plot_data.plot|safe }}.layout,
+            {responsive: true}
+        );
+        {% endfor %}
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+[
+    {
+        "type": "scatter",
+        "x_data": [1, 2, 3, 4, 5],
+        "y_data": [2, 4, 2, 4, 2],
+        "mode": "markers",
+        "marker": {"size": 10, "color": "blue"},
+        "description": "Sample scatter plot data"
+    },
+    {
+        "type": "bar",
+        "x_data": ["A", "B", "C", "D"],
+        "y_data": [10, 15, 13, 17],
+        "marker_color": "green",
+        "description": "Sample bar plot data"
+    },
+    {
+        "type": "line",
+        "x_data": [1, 2, 3, 4, 5],
+        "y_data": [2, 4, 3, 4, 6],
+        "line": {"color": "red", "width": 2},
+        "description": "Sample line plot data"
+    }
+]
