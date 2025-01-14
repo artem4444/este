@@ -34,11 +34,26 @@ fig - json.dump - plots_orchestrator.create_scatter_plot{} - plots_data - js scr
 we use single JSON for all plots in our page
 JSON serves like a runtime hub for all our plots
 
+
+## Plotly Plots
+plots are rendered in the same order as they are in the JSON
+
+    @staticmethod #belongs to the class itself rather than to instances of the class
+    #code would always work same way without @staticmethod , just little bit slower
+
+    if __name__ == "__main__":
+    can always be used for module test purpose: doesn't affect program's runtime at all
+
+
+
 ## PlotsJSON():
 1. handle processing data for all existing Plotly plots: connect plots' python dictionaries into single JSON file storing them all
 2. fully service the Plots JSON
 
-PlotsJSON initialises the Plots JSON file itself and serves it's runtime while it itself is running
+*PlotsJSON initialises plots.json itself and serves it's runtime while it itself is running*
+
+
+
 
 ###### save_data
 save plot data to JSON file
@@ -55,13 +70,18 @@ plotly will retrieve parameters by parameters unique keys
 ###### create_plot
 this create_plot function takes python dictionary from module that called it in the first place and initializes plot in the JSON, adding data from python dictionary to it
 
-## Plotly Plots
-plots will be rendered in the same order as they are the JSON
+
+# plots.json - psql
+.html-views.py-PlotlyPlots-PlotsJSON-plots.json-*psql*
+
+psql servicing class, that different part of programm will be able to use for messaging/storing using psql through JSON: their native storing/communicating format
+
+single for all apps
+
+PostgreSQL's LISTEN/NOTIFY feature replaces custom python functions that would regularly check selected psql tables for udates
+
+*JSON content doen't matter for psql-handler functionality*: /psql_handler.PSQL_Handler can be used with any app
 
 
-    @staticmethod #belongs to the class itself rather than to instances of the class
-    #code would always work same way without @staticmethod , just little bit slower
-
-    if __name__ == "__main__":
-    can always be used for module test purpose: doesn't affect program's runtime at all
-
+# streamlit gui
+chat, plots, players
