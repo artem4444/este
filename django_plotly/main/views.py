@@ -5,8 +5,14 @@ from .plots.plotly_plots import generate_iris_scatter_plot, PlotlyPlots
 import plotly.graph_objects as go
 import plotly.utils
 import json
-from .streamlit.streamlit_app import run_streamlit_app
+from .streamlit_apps.streamlit_app import main
 import logging
+
+import subprocess
+import threading
+import os
+import time
+
 
 def index(request):
     # Get the Plotly graph HTML from the helper function:
@@ -54,32 +60,99 @@ def multi_player_view(request):
     ]
     return render(request, 'main/multi_player.html', {'player_urls': player_urls})
 
+
+# def streamlit_view(request):
+#     # Start Streamlit in a separate thread
+#     import threading
+    
+#     # Only start the thread if Streamlit isn't already running
+#     if not any(t.name == "StreamlitThread" for t in threading.enumerate()):
+#         thread = threading.Thread(target=launch_streamlit, name="StreamlitThread")
+#         thread.daemon = True
+#         thread.start()
+    
+#     # Wait a short time for Streamlit to start
+#     import time
+#     time.sleep(2)
+    
+#     # Pass the Streamlit server URL to the template
+#     streamlit_url = "http://localhost:8501"
+#     return render(request, 'main/streamlit.html', {'streamlit_url': streamlit_url})
+
+# def launch_streamlit():
+#     import streamlit.web.bootstrap as bootstrap
+#     from streamlit.web.cli import main
+#     import streamlit.bootstrap as bootstrap
+#     import sys
+#     from streamlit.web import cli as stcli
+    
+#     sys.argv = ["streamlit", "run", "your_streamlit_app.py"]
+#     sys.exit(stcli.main())
+#     # Set up logging
+#     logging.basicConfig(level=logging.INFO)
+#     logger = logging.getLogger(__name__)
+    
+#     flag_options = {
+#         "server.address": "localhost",
+#         "server.port": 8501,
+#         "browser.serverAddress": "localhost",
+#         "server.headless": True,
+#         "server.runOnSave": True,
+#         "global.developmentMode": False,
+#     }
+    
+#     logger.info("Starting Streamlit server...")
+#     try:
+#         bootstrap.run(run_streamlit_app, "", flag_options=flag_options)
+#         logger.info("Streamlit server started successfully")
+#     except Exception as e:
+#         logger.error(f"Error starting Streamlit server: {str(e)}")
+#         raise
+
+
+def launch_streamlit():
+    try:
+        # Get the path to streamlit_app.py in the streamlit_apps directory
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        streamlit_app_path = os.path.join(current_dir, 'streamlit_apps', 'streamlit_app.py')
+        
+        if not os.path.exists(streamlit_app_path):
+            raise FileNotFoundError(f"Streamlit app not found at: {streamlit_app_path}")
+
+        print(f"Starting Streamlit with app at: {streamlit_app_path}")
+        
+        # Set the working directory to the streamlit_apps directory
+        # This ensures relative imports and file paths work correctly
+        working_dir = os.path.dirname(streamlit_app_path)
+        
+        # Launch Streamlit as a subprocess
+        process = subprocess.Popen([
+            'streamlit',
+            'run',
+            streamlit_app_path,
+            '--server.port=8501',
+            '--server.address=localhost'
+        ], 
+        cwd=working_dir,  # Set working directory
+        env={**os.environ, 'PYTHONPATH': os.path.dirname(current_dir)}  # Add project root to PYTHONPATH
+        )
+        
+        return process
+        
+    except Exception as e:
+        print(f"Error launching Streamlit: {str(e)}")
+        raise
+
 def streamlit_view(request):
+    # Start Streamlit in a separate thread if it's not already running
+    if not any(t.name == "StreamlitThread" for t in threading.enumerate()):
+        thread = threading.Thread(target=launch_streamlit, name="StreamlitThread")
+        thread.daemon = True
+        thread.start()
+    
+    # Give Streamlit a moment to start
+    time.sleep(2)
+    
     # Pass the Streamlit server URL to the template
     streamlit_url = "http://localhost:8501"
     return render(request, 'main/streamlit.html', {'streamlit_url': streamlit_url})
-
-def launch_streamlit():
-    import streamlit.web.bootstrap as bootstrap
-    from streamlit.web.cli import main
-    
-    # Set up logging
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger(__name__)
-    
-    flag_options = {
-        "server.address": "localhost",
-        "server.port": 8501,
-        "browser.serverAddress": "localhost",
-        "server.headless": True,
-        "server.runOnSave": True,
-        "global.developmentMode": False,
-    }
-    
-    logger.info("Starting Streamlit server...")
-    try:
-        bootstrap.run(run_streamlit_app, "", flag_options=flag_options)
-        logger.info("Streamlit server started successfully")
-    except Exception as e:
-        logger.error(f"Error starting Streamlit server: {str(e)}")
-        raise

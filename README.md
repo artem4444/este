@@ -14,9 +14,11 @@ llm_query provides API calling functionality
 
 cd django_plotly
 source venv_django_plotly/bin/activate
+
 python manage.py runserver
 
 ```
+textual file-structure representation: tree django_plotly/main/
 
 simple set of plotly diagrams- all UI will be done when MVP is ready (ninu)
 
@@ -85,3 +87,11 @@ PostgreSQL's LISTEN/NOTIFY feature replaces custom python functions that would r
 
 # streamlit gui
 chat, plots, players
+
+#### streamlit apps in parallel
+write port of needed app in here : streamlit_url = "http://localhost:8501". the rest of apps will run in their own threads
+
+when hosted in container:
+```python
+streamlit_url = "http://192.168.1.100:8501"  # Replace with actual IP and port
+```
