@@ -92,6 +92,6 @@ chat, plots, players
 write port of needed app in here : streamlit_url = "http://localhost:8501". the rest of apps will run in their own threads
 
 when hosted in container:
-```python
+```python: in views.py: def streamlit_view:
 streamlit_url = "http://192.168.1.100:8501"  # Replace with actual IP and port
 ```
