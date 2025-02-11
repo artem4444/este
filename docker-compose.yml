@@ -1,6 +1,7 @@
 #without docker-compose i have to manually run multiple lines of docker commands in cli
 version: '3.8'
-services:
+services: #containers: psql, django_plotly, frontend
+  
   postgres:
     image: postgres:17.2
     container_name: container_psql
@@ -18,6 +19,17 @@ services:
       timeout: 5s
       retries: 10
     restart: always
+
+  #backend: django_plotly container
+
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+
+
+
 
 volumes:
   postgres_data:

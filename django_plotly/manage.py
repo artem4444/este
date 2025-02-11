@@ -3,17 +3,12 @@
 import os
 import sys
 import threading
-from main.views import launch_streamlit
 
 def main():
     # Add the project directory to Python path
     project_dir = os.path.dirname(os.path.abspath(__file__))
     sys.path.append(project_dir)
     
-    # Start Streamlit in a separate thread
-    streamlit_thread = threading.Thread(target=launch_streamlit)
-    streamlit_thread.daemon = True
-    streamlit_thread.start()
 
     # Run Django server
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'este.settings')

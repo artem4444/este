@@ -85,13 +85,77 @@ PostgreSQL's LISTEN/NOTIFY feature replaces custom python functions that would r
 *JSON content doen't matter for psql-handler functionality*: /psql_handler.PSQL_Handler can be used with any app
 
 
-# streamlit gui
-chat, plots, players
 
-#### streamlit apps in parallel
-write port of needed app in here : streamlit_url = "http://localhost:8501". the rest of apps will run in their own threads
+# iFrame: modular Frontend
+embedded inside of streamlit elements
+in iframe: apps' streaming players, js-html rendered content
 
-when hosted in container:
-```python: in views.py: def streamlit_view:
-streamlit_url = "http://192.168.1.100:8501"  # Replace with actual IP and port
+# Django-React
+this React container will work with any web framework as long as the framework:
+-Exposes an API endpoint that React can call
+-Uses standard HTTP requests (REST or GraphQL)
+
+from local react development i will copy everything necessary into encapsulated_react container, that is based on official docker image of nodejs-react 
+
+In production, your React app can run as a distinct microservice separate from Django, communicating only through API calls. This decoupled architecture is commonly used in microservices-based deployments
+
+
+# React endpoints to web framework:
+
+1. React web page to web framework
+connection to views.py:
+- api get requests
+
+2. web page elements connection to logic
+~hooks to url address of backend container
+
+
+# React development
+#### locally hosted react app build:
+sudo apt update
+sudo apt install nodejs npm
+
+npm install -g create-react-app
+
+
+npm config set prefix /home/artem/.npm-global
+
+npx create-react-app react_grid_gui --legacy-peer-deps
+
+#### react app running:
+cd frontend_react
+npm start
+
+#### React Grid Layout
+(npm install react-grid-layout)
+
+1. Browser loads index.html, which contains:
+<div id="root"></div>
+2. index.js mounts <App /> into <div id="root">.
+3. App.js renders GridLayout.js inside it.
+4. GridLayout.js loads and displays the draggable grid.
+5. The browser updates dynamically when you move or resize the boxes.
+
+#### fully React Grid Layout-based UI 
+=where every element (menus, content, buttons, forms, etc.) is inside a grid box
+
+###### GridLayout.js is the root layout of the app
+controlling if a grid element is static or adjustable: '... static: true/false ...'
+
+App.css contains styling of elements of the layout
+
+#### add something inside grid-element
+example:
+how to add something inside top navbar: GridLayout.js: 
 ```
+<div key="navbar" ...
+  here
+</div>
+```
+add responsiveness in GridLayout.css
+
+if i will add anything into react-grid-layout: it will act as if borders of the grid-box would be borders of a browser window
+
+
+# d3.js
+D3.js runs entirely on the client side in the browser

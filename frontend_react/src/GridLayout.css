@@ -1,0 +1,115 @@
+/* Prevent scrolling */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* No scrolling */
+}
+
+.layout {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    height: 100vh; /* Ensure layout fills entire screen height */
+    width: 100vw;  /* Ensure layout fills entire screen width */
+    display: flex;
+    flex-direction: column; /* Align elements vertically */
+}
+
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    background: white;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar: Fixed at top */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: #333;
+    color: white;
+    height: 10vh;
+    width: 100%;
+}
+
+/* Sidebar: Fixed to left */
+.sidebar {
+    background: #eee;
+    height: 80vh; /* Adjust height dynamically */
+    width: 20vw; /* Set width relative to viewport */
+}
+
+/* Main content */
+.content {
+    background: #fff;
+    height: 80vh;
+    flex-grow: 1; /* Fills available space */
+    width: 60vw; /* Dynamic width */
+}
+
+/* Widgets (if any) */
+.widgets {
+    background: #d9f9d9;
+    height: 80vh;
+    width: 20vw; /* Set width relative to viewport */
+}
+
+/* Footer: Fixed at bottom */
+.footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 1000;
+    background: #444;
+    color: white;
+    height: 10vh;
+    width: 100%;
+}
+
+.react-grid-item.react-draggable-dragging {
+    z-index: 100;
+}
+
+.react-grid-item > .react-resizable-handle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    bottom: 0;
+    right: 0;
+    cursor: se-resize;
+}
+
+.box {
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 4px;
+}
+
+.box:hover {
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+
+
+.video-container {
+    width: 100%;
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  }
+  
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
