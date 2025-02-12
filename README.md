@@ -156,6 +156,66 @@ add responsiveness in GridLayout.css
 
 if i will add anything into react-grid-layout: it will act as if borders of the grid-box would be borders of a browser window
 
+# frontend_controller.py
+acts as a bridge between your Python backend and the React frontend
+
+to use from web framework app:
+from frontend_controller import ReactFrontend, FrontendConfig
+
+general workflow of frontend_controller.py:
+1. configuration is sent to it from python module, that called it, from web framework app
+2. configuration from frontend_controller.py is imported in .js modules in react app
+```python: frontend_controller.py writes config into pre-configured path of react app's config.json (doesn't merge or append - it replaces the entire file content)
+
+#Send config to frontend_controller
+frontend = ReactFrontend("./frontend")
+frontend.configure(config)  # This writes to src/config.json
+```
+
+3. logic inside .js modules uses values from config imported from frontend_controller.py
+
+
+#### FrontendConfig: config data format for Python side
+
+#### ReactFrontend: 
+1. initializes /src/config.json and write config from python module, it has been called from in it
+2. Starts the React development server using npm start if dev_mode is True.
+3. Builds and serves the production version using npm run build and npx serve if dev_mode is False.
+4. Manages the frontend process by keeping track of the running instance in _process.
+5. Stops the frontend server when requested, terminating the running process.
+6. Supports context manager usage (with statement), automatically starting the server on enter and stopping it on exit.
+
+you will need to restart the React app (call frontend_controller ReactFrontend with new config data) to apply changes made to config.json
+
+
+*use newly configured gui parameters in react app through importing config.json in .js modules:*
+# React JS principles for working with config.json in your React modules:
+1. import config from '../config.json';
+  config object in .js modules is in same format as JSON and is treated same as dictionaries in python
+
+2. access config values using either dot notation (config.theme.color) or bracket notation ```(config['theme']['color'])```
+
+3. React variables asignment and usage in components:
+```js
+const navbarKey = "navbar";
+  <div key={navbarKey} className={navbarClass}> 
+
+```
+variable-assignments are located on top of the .js module
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # d3.js
 D3.js runs entirely on the client side in the browser

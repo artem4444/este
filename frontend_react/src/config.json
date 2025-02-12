@@ -1,0 +1,16 @@
+{
+  "theme": {
+    "backgroundColor": "#ffffff",
+    "primaryColor": "#007b00"
+  },
+  "components": {
+    "showHeader": true,
+    "showSidebar": false
+  },
+  "layout": {
+    "containerWidth": "1200px"
+  },
+  "customProps": {
+    "apiEndpoint": "http://localhost:8000"
+  }
+}

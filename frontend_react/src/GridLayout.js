@@ -4,6 +4,9 @@ import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import "./GridLayout.css";
 
+// Import config
+//import config from './config.json';
+
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const GridLayout = () => {
