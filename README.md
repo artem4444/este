@@ -204,18 +204,44 @@ const navbarKey = "navbar";
 variable-assignments are located on top of the .js module
 
 
+# tailwindcss
+from /home/artem/Mosaic/este/frontend_react# 
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init
+
+#result: Created Tailwind CSS config file: tailwind.config.js (in /frontend_react)
+touch postcss.config.js
+npm install tailwindcss postcss @tailwindcss/postcss
+npm run build
+
+```
 
 
 
+# react-chatbot-kit inside grid element container
+
+```bash
+npm install react-chatbot-kit
 
 
+```
 
+#### chat backend
+from venv
+```bash
+apt install uvicorn
+pip install fastapi
+pip install "uvicorn[standard]"
 
+#because venv is not in ./ but in /django_plotly:
+#fix when to production
+/home/artem/Mosaic/este/django_plotly/venv_django_plotly/bin/uvicorn chat_backend:app --reload
+```
 
+from frontend_react:
+```bash
+npm install axios
+```
 
-
-
-
-
-# d3.js
-D3.js runs entirely on the client side in the browser
+#### chat custom styling: \react-chatbot\CustomInput.js

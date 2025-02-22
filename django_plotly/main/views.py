@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.utils.safestring import mark_safe
 from django.http import HttpResponse
 from .plots.plotly_plots import generate_iris_scatter_plot, PlotlyPlots
 import plotly.graph_objects as go
@@ -64,3 +65,28 @@ def plot_page(request):
     return render(request, 'main/plots.html', {'plots_data': plots_data})
     
 
+
+'''
+with find_file i won't spend more computer power or time, than if it was BASE_DIR,
+if search_path will be of same precision
+
+easier to use modules from other apps
+-when i will pack apps in containers: 
+ functionality of tranfer of data between containers will need to be added
+'''
+def find_file(filename, search_path="/"):
+    for root, _, files in os.walk(search_path):
+        if filename in files:
+            return os.path.join(root, filename)
+    return None
+
+def c4_diagram(request):
+    js_file_path = find_file("c4.js", "/home/artem/Mosaic/este/d3_c4")  # Adjust search path as needed
+        #\\wsl.localhost\Ubuntu-24.04\home\artem\Mosaic\este\d3_c4
+    if not js_file_path:
+        return render(request, "error.html", {"message": "c4.js not found"})
+
+    with open(js_file_path, "r") as file:
+        d3_js_code = file.read()
+
+    return render(request, "c4_diagram.html", {"your_d3_js_code": mark_safe(d3_js_code)})

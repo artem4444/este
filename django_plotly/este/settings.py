@@ -76,6 +76,7 @@ TEMPLATES = [
             BASE_DIR / 'templates',          # Global templates directory
             BASE_DIR / 'este/templates',    # Este-specific templates directory
         ],
+        "DIRS": [os.path.join(BASE_DIR, "main/templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

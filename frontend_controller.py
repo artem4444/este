@@ -14,6 +14,16 @@ class FrontendConfig:
     layout: Dict[str, Any]  # Layout configuration
     custom_props: Dict[str, Any]  # Additional custom properties
 
+'''
+for all key-values in FrontendConfig:
+add key value in ReactFrontend def configure config_dict
+'''
+
+'''
+chatbot parameters: in frontend_react\src\react-chatbot
+'''
+
+
 
 
 class ReactFrontend:
